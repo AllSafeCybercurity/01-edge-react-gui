@@ -1,26 +1,35 @@
 // @flow
 
-import type { EdgeLobby } from 'edge-core-js'
+import { type EdgeLobby } from 'edge-core-js'
 import * as React from 'react'
 import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native'
+import { Actions } from 'react-native-router-flux'
 import { isIPhoneX } from 'react-native-safe-area-view'
+import { connect } from 'react-redux'
 import { sprintf } from 'sprintf-js'
 
+import { lobbyLogin } from '../../actions/EdgeLoginActions.js'
 import s from '../../locales/strings.js'
 import { PrimaryButton } from '../../modules/UI/components/Buttons/PrimaryButton.ui.js'
 import { SecondaryButton } from '../../modules/UI/components/Buttons/SecondaryButton.ui.js'
-import { THEME } from '../../theme/variables/airbitz'
+import { THEME } from '../../theme/variables/airbitz.js'
+import { type Dispatch, type RootState } from '../../types/reduxTypes.js'
 import { SceneWrapper } from '../common/SceneWrapper.js'
 
-type EdgeLoginSceneProps = {
-  lobby?: EdgeLobby,
-  error?: string,
+type StateProps = {
+  error: string | null,
   isProcessing: boolean,
+  lobby: EdgeLobby | null
+}
+
+type DispatchProps = {
   accept(): void,
   decline(): void
 }
 
-export default class EdgeLoginScene extends React.Component<EdgeLoginSceneProps> {
+type Props = StateProps & DispatchProps
+
+class EdgeLoginSceneComponent extends React.Component<Props> {
   renderBody() {
     let message = this.props.error
     if (!this.props.error) {
@@ -215,3 +224,19 @@ const rawStyles = {
   }
 }
 const styles: typeof rawStyles = StyleSheet.create(rawStyles)
+
+export const EdgeLoginScene = connect(
+  (state: RootState): StateProps => ({
+    error: state.core.edgeLogin.error,
+    isProcessing: state.core.edgeLogin.isProcessing,
+    lobby: state.core.edgeLogin.lobby
+  }),
+  (dispatch: Dispatch): DispatchProps => ({
+    accept() {
+      dispatch(lobbyLogin())
+    },
+    decline() {
+      Actions.pop()
+    }
+  })
+)(EdgeLoginSceneComponent)
