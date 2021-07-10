@@ -26,10 +26,10 @@ import { ExchangeQuote } from '../themed/ExchangeQuoteComponent.js'
 import { LineTextDivider } from '../themed/LineTextDivider'
 import { ClickableText } from '../themed/ThemedButtons'
 
-export type OwnProps = {
+type OwnProps = {
   swapInfo: GuiSwapInfo
 }
-export type StateProps = {
+type StateProps = {
   account: EdgeAccount,
   fromCurrencyIcon: string,
   fromDenomination: string,
@@ -39,7 +39,7 @@ export type StateProps = {
   toDenomination: string,
   toWalletCurrencyName: string
 }
-export type DispatchProps = {
+type DispatchProps = {
   shift(swapInfo: GuiSwapInfo): mixed,
   timeExpired(swapInfo: GuiSwapInfo): void
 }
@@ -47,7 +47,7 @@ type Props = OwnProps & StateProps & DispatchProps & ThemeProps
 
 type State = {}
 
-export class CryptoExchangeQuoteScreenComponent extends React.Component<Props, State> {
+class CryptoExchangeQuoteScreenComponent extends React.Component<Props, State> {
   calledApprove: true
 
   componentDidMount = () => {

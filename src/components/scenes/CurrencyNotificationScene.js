@@ -81,13 +81,9 @@ export class CurrencyNotificationComponent extends React.Component<Props, State>
 }
 
 export const CurrencyNotificationScene = connect(
-  (state: RootState): StateProps => {
-    const { account } = state.core
-
-    return {
-      userId: account.rootLoginId
-    }
-  },
+  (state: RootState): StateProps => ({
+    userId: state.core.account.rootLoginId
+  }),
   (dispatch: Dispatch): DispatchProps => ({
     enableNotifications: (currencyCode, hours, enabled) => dispatch(enableNotifications(currencyCode, hours, enabled))
   })
