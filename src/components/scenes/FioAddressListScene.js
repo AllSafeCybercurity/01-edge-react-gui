@@ -5,7 +5,6 @@ import * as React from 'react'
 import { ActivityIndicator, Image, ScrollView, View } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import IonIcon from 'react-native-vector-icons/Ionicons'
-import { connect } from 'react-redux'
 
 import fioAddressLogo from '../../assets/images/fio/fio_logo.png'
 import { Fontello } from '../../assets/vector'
@@ -13,8 +12,7 @@ import { FIO_ADDRESS_DETAILS, FIO_ADDRESS_LIST, FIO_ADDRESS_REGISTER, FIO_DOMAIN
 import s from '../../locales/strings.js'
 import { refreshAllFioAddresses } from '../../modules/FioAddress/action'
 import { FioNameRow } from '../../modules/FioAddress/components/FioName'
-import type { RootState } from '../../reducers/RootReducer'
-import type { Dispatch } from '../../types/reduxTypes'
+import { connect } from '../../types/react-redux.js'
 import type { FioAddress, FioDomain } from '../../types/types'
 import { SceneWrapper } from '../common/SceneWrapper'
 import { showError } from '../services/AirshipInstance'
@@ -204,15 +202,15 @@ const getStyles = cacheStyles((theme: Theme) => ({
   }
 }))
 
-export const FioAddressListScene = connect(
-  (state: RootState): StateProps => ({
+export const FioAddressListScene = connect<StateProps, DispatchProps, NavigationProps>(
+  state => ({
     fioAddresses: state.ui.scenes.fioAddress.fioAddresses,
     fioDomains: state.ui.scenes.fioAddress.fioDomains,
     fioWallets: state.ui.wallets.fioWallets,
     loading: state.ui.scenes.fioAddress.fioAddressesLoading,
     isConnected: state.network.isConnected
   }),
-  (dispatch: Dispatch): DispatchProps => ({
+  dispatch => ({
     async refreshAllFioAddresses() {
       await dispatch(refreshAllFioAddresses())
     }
