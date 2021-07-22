@@ -173,3 +173,5 @@ If you want to inspect Redux, you can install the [redux-debugger](https://githu
 ## Contributing
 
 Please follow the coding conventions defined in [Edge Conventions](https://github.com/Airbitz/edge-conventions)
+
+##npx react-native run-android
