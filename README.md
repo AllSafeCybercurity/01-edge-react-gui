@@ -110,6 +110,7 @@ Copy the `env.example.json` to `env.json` and change the `AIRBITZ_API_KEY` to th
 - Choose a target device or simulator and tap the Play button on the top nav bar
 
 #### Android
+yarn install --network-timeout=30000
 
     cd android
     ./gradlew assembleDebug
